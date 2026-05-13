@@ -1,0 +1,111 @@
+teacher 
+
+CREATE TABLE teachers (
+    teacher_id SERIAL PRIMARY KEY,
+    username VARCHAR(50) UNIQUE NOT NULL,
+    email VARCHAR(100) UNIQUE NOT NULL,
+    password_hash VARCHAR(255) NOT NULL,
+    full_name VARCHAR(100) NOT NULL,
+    qualification VARCHAR(200),
+    department VARCHAR(100),
+    hire_date DATE,
+    phone VARCHAR(20),
+    is_active BOOLEAN DEFAULT TRUE,
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+);
+
+
+student 
+
+
+CREATE TABLE students (
+    student_id SERIAL PRIMARY KEY,
+    username VARCHAR(50) UNIQUE NOT NULL,
+    email VARCHAR(100) UNIQUE NOT NULL,
+    password_hash VARCHAR(255) NOT NULL,
+    full_name VARCHAR(100) NOT NULL,
+    roll_number VARCHAR(50) UNIQUE NOT NULL,
+    class VARCHAR(50),
+    parent_phone VARCHAR(20),
+    admission_date DATE DEFAULT CURRENT_DATE,
+    is_active BOOLEAN DEFAULT TRUE,
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+);
+
+quiz 
+
+CREATE TABLE quizzes (
+    quiz_id SERIAL PRIMARY KEY,
+    teacher_id INTEGER REFERENCES teachers(teacher_id) ON DELETE CASCADE,
+    title VARCHAR(200) NOT NULL,
+    description TEXT,
+    duration_minutes INTEGER NOT NULL,
+    total_marks INTEGER NOT NULL,
+    passing_marks INTEGER NOT NULL,
+    start_time TIMESTAMP,
+    end_time TIMESTAMP,
+    is_active BOOLEAN DEFAULT TRUE,
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+);
+
+
+questions 
+
+
+CREATE TABLE questions (
+    question_id SERIAL PRIMARY KEY,
+    quiz_id INTEGER REFERENCES quizzes(quiz_id) ON DELETE CASCADE,
+    question_text TEXT NOT NULL,
+    question_type VARCHAR(20) CHECK (question_type IN ('mcq', 'true_false', 'short_answer')) DEFAULT 'mcq',
+    option_a TEXT,
+    option_b TEXT,
+    option_c TEXT,
+    option_d TEXT,
+    correct_answer VARCHAR(10) NOT NULL,
+    marks INTEGER NOT NULL,
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+);
+
+
+student answer 
+
+CREATE TABLE student_answers (
+    answer_id SERIAL PRIMARY KEY,
+    student_id INTEGER REFERENCES students(student_id) ON DELETE CASCADE,
+    quiz_id INTEGER REFERENCES quizzes(quiz_id) ON DELETE CASCADE,
+    question_id INTEGER REFERENCES questions(question_id) ON DELETE CASCADE,
+    student_answer TEXT NOT NULL,
+    is_correct BOOLEAN DEFAULT FALSE,
+    marks_obtained DECIMAL(5,2) DEFAULT 0,
+    answered_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+);
+
+
+result 
+
+
+CREATE TABLE results (
+    result_id SERIAL PRIMARY KEY,
+    student_id INTEGER REFERENCES students(student_id) ON DELETE CASCADE,
+    quiz_id INTEGER REFERENCES quizzes(quiz_id) ON DELETE CASCADE,
+    total_marks_obtained DECIMAL(5,2) NOT NULL,
+    percentage DECIMAL(5,2) NOT NULL,
+    is_passed BOOLEAN DEFAULT FALSE,
+    completed_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    UNIQUE(student_id, quiz_id)
+);
+
+
+quiz attempt
+
+
+CREATE TABLE quiz_attempts (
+    attempt_id SERIAL PRIMARY KEY,
+    student_id INTEGER REFERENCES students(student_id) ON DELETE CASCADE,
+    quiz_id INTEGER REFERENCES quizzes(quiz_id) ON DELETE CASCADE,
+    start_time TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    end_time TIMESTAMP,
+    status VARCHAR(20) CHECK (status IN ('in_progress', 'completed', 'abandoned')) DEFAULT 'in_progress'
+);
