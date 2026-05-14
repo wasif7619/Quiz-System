@@ -23,7 +23,7 @@ router.post("/login", async (req, res) => {
   try {
     // Check in admin table
     const result = await pool.query(
-      "SELECT * FROM admin WHERE email = $1",
+      "SELECT  email, full_name, password_hash,admin_image FROM admin WHERE email = $1",
       [email]
     );
 
@@ -57,6 +57,8 @@ router.post("/login", async (req, res) => {
         admin_id: admin.admin_id,
         full_name: admin.full_name,
         email: admin.email,
+        password_hash: admin.password_hash,
+        admin_image: admin.admin_image,
         role: 'admin'
       },
       message: "Login successful",

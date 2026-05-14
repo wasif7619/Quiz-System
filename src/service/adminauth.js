@@ -18,7 +18,12 @@ export const adminAuthService = {
 
       const data = await response.json();
       return data;
+      if (data.success) {
+        localStorage.setItem('adminToken', data.token);
+        localStorage.setItem('adminInfo', JSON.stringify(data.admin));
+      }
       
+      console.log("local storage data:", localStorage.getItem('adminInfo'));
     } catch (error) {
       console.error('Login Error:', error);
       return { success: false, message: error.message };

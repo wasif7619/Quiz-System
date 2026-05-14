@@ -7,7 +7,9 @@ import { useNavigate } from 'react-router-dom'
 
 const Admin_Dashboard = () => {
     const token = localStorage.getItem('adminToken');
-    // console.log('Admin Token:', token);
+    const adminData = JSON.parse(localStorage.getItem('adminData'));
+    console.log('Admin Token:', token);
+    console.log('Admin Data:', adminData);
     const navigate = useNavigate();
 
   const handleteacher = () => {
@@ -18,13 +20,26 @@ const Admin_Dashboard = () => {
     navigate("/Student_Dashboard")
   }
 
+  const handleprofile = () => {
+    navigate("/Admin_Profile", { state: { from: "/Admin_Dashboard" } });
+  }
   return (
     <div className="min-h-screen bg-gradient-to-br from-blue-50 to-purple-50 p-6">
       {/* Dashboard Title */}
-      <div className="text-center mb-6">
-        <h1 className="text-3xl font-bold text-gray-800 mb-1">Admin Dashboard</h1>
-        <p className="text-gray-500 text-sm">Manage your quiz system efficiently</p>
-      </div>
+     <div className="mb-6 relative">
+       <div className="flex items-center justify-center">
+        {/* Icon on left corner - absolute positioning */}
+         <div className="absolute right-60">
+          <svg onClick={handleprofile} className="w-12 h-12 text-purple-600" fill="currentColor" viewBox="0 0 24 24">
+            <path d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z"/>
+          </svg>
+         </div>
+    
+    {/* Heading centered */}
+    <h1 className="text-3xl font-bold text-gray-800">Admin Dashboard</h1>
+  </div>
+  <p className="text-gray-500 text-sm text-center mt-2">Manage your quiz system efficiently</p>
+</div>
 
       {/* Grid Layout - 2 images per row */}
       <div className="max-w-4xl mx-auto">

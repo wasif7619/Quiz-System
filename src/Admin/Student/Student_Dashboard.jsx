@@ -62,7 +62,7 @@ const Student_Dashboard = () => {
   }
 };
   const handleViewDetails = (studentId) => {
-    navigate("/View_Student", { state: { studentId } });
+    navigate("/View_Student_ID", { state: { studentId } });
   };
 
   const handleAddStudent = () => {
@@ -71,9 +71,11 @@ const Student_Dashboard = () => {
   const handleback = () => {
     navigate("/Admin_Dashboard");
   };
-  const handleEditDetails = (studentId) => {
-    navigate("/Edit_Student", { state: { studentId } });
-  };
+
+  const handleEditDetails = (student) => {
+  // Pass the entire student object, not just ID
+  navigate("/Edit_Student", { state: { student: student } });
+};
 
   const handleDelete = (studentId, studentName) => {
     setSelectedStudentId(studentId);
@@ -204,7 +206,7 @@ const Student_Dashboard = () => {
                         View Details
                       </button>
                       <button 
-                        onClick={() => handleEditDetails(student.student_id)} 
+                        onClick={() => handleEditDetails(student)} 
                         className="bg-green-500 hover:bg-green-600 text-white px-3 py-1 rounded-lg text-sm transition"
                       >
                         Edit
