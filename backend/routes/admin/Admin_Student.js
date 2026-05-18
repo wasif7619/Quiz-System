@@ -110,39 +110,62 @@ router.delete("/Delete_student/:id", async (req, res) => {
 // UPDATE student
 router.put("/Update_student/:id", upload.single('profile_image'), async (req, res) => {
   const { id } = req.params;
-  const { full_name, email, password_hash, is_active, class_name   } = req.body;
-    let profile_image_url = null;
-    if (req.file) {
-      profile_image_url = `/uploads/students/${req.file.filename}`;
+  const { full_name, email, password_hash, is_active, class_name } = req.body;
+  
+  try {
+    // Get current student data first
+    const current = await pool.query("SELECT * FROM students WHERE student_id = $1", [id]);
+    
+    if (current.rows.length === 0) {
+      return res.status(404).json({ success: false, message: "Student not found" });
     }
-    try {
+    
+    const oldData = current.rows[0];
+    
+    // Use new values or keep old ones
+    const newFullName = full_name || oldData.full_name;
+    const newEmail = email || oldData.email;
+    const newClassName = class_name || oldData.class_name;
+    const newIsActive = (is_active === 'true' || is_active === true);
+    
+    // Only update password if provided
+    let newPassword = oldData.password_hash;
+    if (password_hash && password_hash.trim() !== '') {
+      newPassword = password_hash;
+    }
+    
+    // Only update image if uploaded
+    let newImage = oldData.profile_image_url;
+    if (req.file) {
+      newImage = `/uploads/students/${req.file.filename}`;
+    }
+    
+    // Update database
     const result = await pool.query(
       `UPDATE students SET 
-        full_name = COALESCE($1, full_name),
-        email = COALESCE($2, email),
-        password_hash = COALESCE($3, password_hash),
-        profile_image_url = COALESCE($4, profile_image_url),
-        is_active = COALESCE($5, is_active),
-        class_name = COALESCE($6, class_name)
-      WHERE student_id = $7
-      RETURNING student_id, full_name, email, profile_image_url, is_active`,
-      [full_name, email, password_hash, profile_image_url, is_active === 'true' || is_active === true || true, class_name, id]
+        full_name = $1, 
+        email = $2, 
+        class_name = $3, 
+        password_hash = $4, 
+        profile_image_url = $5, 
+        is_active = $6 
+      WHERE student_id = $7 
+      RETURNING *`,
+      [newFullName, newEmail, newClassName, newPassword, newImage, newIsActive, id]
     );
-
-    if (result.rows.length === 0) {
-      return res.status(404).json({ message: "Student not found" });
-    }
-
+    
     res.status(200).json({
       success: true,
       message: "Student updated successfully",
       student: result.rows[0]
     });
+    
   } catch (error) {
     console.error("Error updating student:", error);
-    res.status(500).json({ message: "Internal server error" });
+    res.status(500).json({ success: false, message: "Internal server error" });
   }
 });
+
 // CREATE student
 router.post("/Create_student", upload.single('profile_image'), async (req, res) => {
   try {

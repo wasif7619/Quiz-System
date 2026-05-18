@@ -20,6 +20,9 @@ const Admin_Dashboard = () => {
     navigate("/Student_Dashboard")
   }
 
+  const handleAssign_students_to_classes = () => {
+    navigate("/Assign_students_to_classes")
+  }
   const handleprofile = () => {
     navigate("/Admin_Profile", { state: { from: "/Admin_Dashboard" } });
   }
@@ -87,6 +90,7 @@ const Admin_Dashboard = () => {
                 src={Assign_students_to_classes}  
                 alt="Assign Students to Classes" 
                 className="w-32 h-32 object-contain"
+                onClick={handleAssign_students_to_classes}
               />
             </div>
             <div className="p-2 text-center">

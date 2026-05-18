@@ -13,6 +13,7 @@ import Student_Dashboard from "./Admin/Student/Student_Dashboard";
 import Add_Student from "./Admin/Student/Add_Student";
 import View_Student_ID from "./Admin/Student/View_Student_ID";
 import Edit_Student from "./Admin/Student/Edit_Student";
+import Assign_students_to_classes from "./Admin/Assign_students_to_classes";
 // Importing Teacher and Student main pages
 import Main_page_Teacher from "./Teacher/Auth/Main_page_Teacher"; 
 import Main_page_student from "./Student/Auth/Main_page_student";
@@ -39,6 +40,7 @@ function App() {
           <Route path="/Add_Student" element={<Add_Student />} />
           <Route path="/View_Student_ID" element={<View_Student_ID />} />
           <Route path="/Edit_Student" element={<Edit_Student />} />
+          <Route path="/Assign_students_to_classes" element={<Assign_students_to_classes />} />
           {/* Routes for Teacher and Student main pages */}
           <Route path="/Main_page_Teacher" element={<Main_page_Teacher />} />
           <Route path="/Main_page_student" element={<Main_page_student />} />

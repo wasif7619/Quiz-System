@@ -8,7 +8,7 @@ const Add_Student = () => {
   const [password_hash, setpassword_hash] = useState('');
   const [is_active, setIsActive] = useState(true);
   const [class_name, setClassName] = useState('');
-  const [profile_image, setProfileImage] = useState('');
+  const [profile_image, setProfileImage] = useState(null);
   const [loading, setLoading] = useState(false);
   const [previewImage, setPreviewImage] = useState('');
   const navigate = useNavigate('');
