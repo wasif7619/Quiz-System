@@ -21,12 +21,12 @@ app.use(express.urlencoded({ extended: true }));
 const adminauth = require('./routes/admin/auth');
 const adminTeacher = require('./routes/admin/Admin_Teacher');
 const adminStudent = require('./routes/admin/Admin_Student');
-// const adminQuiz = require('./routes/admin/Admin_Quiz');
+const adminAssignStudent = require('./routes/admin/Assign_student_to_class');
 // Use routes
 app.use('/api/admin', adminauth);
 app.use('/api/teachers', adminTeacher);
 app.use('/api/students', adminStudent);
-// app.use('/api/admin', adminQuiz);
+app.use('/api/assign-student-to-class', adminAssignStudent);
 // Start server
 app.listen(PORT, () => {
      console.log(`Server running on port ${PORT}`);
