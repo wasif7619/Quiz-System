@@ -217,5 +217,4 @@ router.post("/Create_student", upload.single('profile_image'), async (req, res) 
     });
   }
 });
-
 module.exports = router;

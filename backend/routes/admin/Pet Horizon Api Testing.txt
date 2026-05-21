@@ -1,8 +1,0 @@
-forget password api "message": "If the email exists, reset instructions were sent." but i cant get reset info on my register mail address
-reset password api "not tested because  cant recieve mail on forget password api "Invalid or expired token"
-Families (List families api) 500 error "mongoose is not defined"  
-Invite member api 500 error  
-Accecpt invitation api (not tested)
-Dashboard (Dashboard status)  "error": "No active pet selected" but on get status
-Notifications (Mark notification read) not tested because of notificationid
-(Delete notification) not tested because of notificationid 
