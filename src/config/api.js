@@ -20,6 +20,11 @@ export const API_ENDPOINTS = {
         get_id: (id) => `/students/Get_student/${id}`,
         update: (id) => `/students/Update_student/${id}`,
         delete: (id) => `/students/Delete_student/${id}`
+      },
+      Assign: {
+        getAll: '/assign-student-to-class/get_all',
+        create: '/assign-student-to-class/assign_student_to_class',       
+        update: '/assign-student-to-class/unassign_student_from_class',
       }
     },
     teacher: {
