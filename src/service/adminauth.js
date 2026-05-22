@@ -323,5 +323,71 @@ updatestudentbyid: async (studentId, studentData) => {
     };
   }
 },
-  // Additional student methods (create, update, delete) can be added here
+                      // Assign student to class
+                      
+  getAllAssignments: async () => {
+    try {
+      const token = adminAuthService.getToken();
+      const url = getFullUrl(API_ENDPOINTS.main.admin.Assign.getAll);
+      const response = await fetch(url, {
+        method: 'GET',
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': `Bearer ${token}`
+        }
+      });
+      const data = await response.json();
+      return data;
+    } catch (error) {
+      console.error('Get Assignments Error:', error);
+      return {
+        success: false,
+        message: error.message
+      };
+    }
+  },
+  assignStudentToClass: async (assignmentData) => {
+    try {
+      const token = adminAuthService.getToken();
+      const url = getFullUrl(API_ENDPOINTS.main.admin.Assign.create);
+      const response = await fetch(url, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': `Bearer ${token}`
+        },
+        body: JSON.stringify(assignmentData)
+      });
+      const data = await response.json();
+      return data;
+    } catch (error) {
+      console.error('Assign Student to Class Error:', error);
+      return {
+        success: false,
+        message: error.message
+      };
+    }
+  },
+  unassignStudentFromClass: async (assignmentData) => {
+    try {
+      const token = adminAuthService.getToken();
+      const url = getFullUrl(API_ENDPOINTS.main.admin.Assign.update);
+      const response = await fetch(url, {
+        method: 'PUT',
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': `Bearer ${token}`
+        },
+        body: JSON.stringify(assignmentData)
+      });
+      const data = await response.json();
+      return data;
+    } catch (error) {
+      console.error('Unassign Student from Class Error:', error);
+      return {
+        success: false,
+        message: error.message
+      };
+    }
+  }
 };

@@ -116,10 +116,76 @@ router.post("/assign_student_to_class", async (req, res) => {
     res.status(500).json({ error: "Internal server error" });
   }
 });
-
-router.get("/get_all",async (req, res) => {
+router.put("/unassign_student_from_class", async (req, res) => {
+  const { student_full_name, teacher_full_name } = req.body;
   try {
-    const result = await pool.query("SELECT * FROM teacher_student_assignments");
+    // Find student
+    const student = await pool.query(
+      "SELECT student_id FROM students WHERE TRIM(LOWER(full_name)) = TRIM(LOWER($1))",
+      [student_full_name]
+    );
+
+    if (student.rows.length === 0) {
+      return res.status(404).json({ 
+        error: "Student not found",
+        message: `No student found with name: ${student_full_name}`
+      });
+    }
+    const student_id = student.rows[0].student_id;
+
+    // Find teacher
+    const teacher = await pool.query(
+      "SELECT teacher_id FROM teachers WHERE TRIM(LOWER(full_name)) = TRIM(LOWER($1))",
+      [teacher_full_name]
+    );
+
+    if (teacher.rows.length === 0) {
+      return res.status(404).json({ 
+        error: "Teacher not found",
+        message: `No teacher found with name: ${teacher_full_name}`
+      });
+    }
+    const teacher_id = teacher.rows[0].teacher_id;
+
+    // Remove assignment from teacher_student_assignments table
+    await pool.query(
+      "DELETE FROM teacher_student_assignments WHERE teacher_id = $1 AND student_id = $2",
+      [teacher_id, student_id]
+    );
+
+    // Clear class_name from students table
+    await pool.query(
+      "UPDATE students SET class_name = NULL WHERE student_id = $1",
+      [student_id]
+    );
+
+    res.status(200).json({
+      success: true,
+      message: `Successfully unassigned ${student_full_name} from teacher ${teacher_full_name}`
+    });
+  } catch (error) {
+    console.error("Error unassigning student from class:", error);
+    res.status(500).json({ error: "Internal server error" });
+  }
+});
+
+router.get("/get_all", async (req, res) => {
+  try {
+    const result = await pool.query(`SELECT 
+      tsa.assignment_id,
+      t.teacher_id,
+      t.full_name AS teacher_name,
+      t.profile_image_url AS profile_image_url,
+      s.student_id,
+      s.full_name AS student_name,
+      s.profile_image_url AS student_profile_image_url,
+      s.class_name,
+      tsa.assigned_date
+    FROM teacher_student_assignments tsa
+    JOIN teachers t ON tsa.teacher_id = t.teacher_id
+    JOIN students s ON tsa.student_id = s.student_id
+    WHERE tsa.is_active = true`);
+    
     res.status(200).json({
       success: true,
       data: result.rows
@@ -128,17 +194,6 @@ router.get("/get_all",async (req, res) => {
     console.error("Error fetching all students:", error);
     res.status(500).json({ error: "Internal server error" });
   }
-}); 
-// router.put("/unassigned", async (req, res) => {
-//   try {
-//     const result = await pool.query("SELECT * FROM students WHERE student_id NOT IN (SELECT student_id FROM teacher_student_assignments)");
-//     res.status(200).json({
-//       success: true,
-//       data: result.rows
-//     });
-//   } catch (error) {
-//     console.error("Error fetching unassigned students:", error);
-//     res.status(500).json({ error: "Internal server error" });
-//   }
-// });
+});
+
 module.exports = router;
