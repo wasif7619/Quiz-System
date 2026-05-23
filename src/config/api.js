@@ -23,8 +23,10 @@ export const API_ENDPOINTS = {
       },
       Assign: {
         getAll: '/assign-student-to-class/get_all',
-        create: '/assign-student-to-class/assign_student_to_class',       
-        update: '/assign-student-to-class/unassign_student_from_class',
+        create: '/assign-student-to-class/assign_student_to_class',
+        unassign: '/assign-student-to-class/unassign_student_from_class',       
+        Get_Student:'/assign-student-to-class/Get_Student',
+        Get_Teacher:'/assign-student-to-class/Get_Teacher'
       }
     },
     teacher: {
