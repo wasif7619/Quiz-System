@@ -196,4 +196,34 @@ router.get("/get_all", async (req, res) => {
   }
 });
 
+router.get("/Get_Student", async (req, res) => {
+  const { student_full_name } = req.query;
+  try {
+    const result = await pool.query(
+      "SELECT student_id, full_name,class_name, email, profile_image_url, is_active, created_at FROM students ORDER BY student_id DESC"
+    );
+    res.status(200).json({
+      success: true,
+      data: result.rows
+    });
+  } catch (error) {
+    console.error("Error fetching student:", error);
+    res.status(500).json({ error: "Internal server error" });
+  }
+});
+router.get("/Get_Teacher", async (req, res) => {
+  const { teacher_full_name } = req.query;
+  try {
+    const result = await pool.query(
+      "SELECT teacher_id, full_name, email, profile_image_url, is_active, created_at FROM teachers ORDER BY teacher_id DESC"
+    );
+    res.status(200).json({
+      success: true,
+      data: result.rows
+    });
+  } catch (error) {
+    console.error("Error fetching teacher:", error);
+    res.status(500).json({ error: "Internal server error" });
+  }
+});
 module.exports = router;

@@ -371,7 +371,7 @@ updatestudentbyid: async (studentId, studentData) => {
   unassignStudentFromClass: async (assignmentData) => {
     try {
       const token = adminAuthService.getToken();
-      const url = getFullUrl(API_ENDPOINTS.main.admin.Assign.update);
+      const url = getFullUrl(API_ENDPOINTS.main.admin.Assign.unassign);
       const response = await fetch(url, {
         method: 'PUT',
         headers: {
@@ -389,5 +389,47 @@ updatestudentbyid: async (studentId, studentData) => {
         message: error.message
       };
     }
+  },
+  Get_Student: async () => {
+    try {
+      const token = adminAuthService.getToken();
+      const url = getFullUrl(API_ENDPOINTS.main.admin.Assign.Get_Student);
+      const response = await fetch(url, {
+        method: 'GET',
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': `Bearer ${token}`
+        }
+      });
+      const data = await response.json();
+      return data;
+    } catch (error) {
+      console.error('Get Student Error:', error);
+      return {
+        success: false,
+        message: error.message
+      };
+    }
+  },
+  Get_Teacher: async () => {
+    try {
+      const token = adminAuthService.getToken();
+      const url = getFullUrl(API_ENDPOINTS.main.admin.Assign.Get_Teacher);
+      const response = await fetch(url, {
+        method: 'GET',
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': `Bearer ${token}`
+        }
+      });
+      const data = await response.json();
+      return data;
+    } catch (error) {
+      console.error('Get Teacher Error:', error);
+      return {
+        success: false,
+        message: error.message
+      };
+    } 
   }
 };

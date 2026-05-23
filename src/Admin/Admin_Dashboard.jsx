@@ -23,6 +23,11 @@ const Admin_Dashboard = () => {
   const handleAssign_students_to_classes = () => {
     navigate("/Assign_students_to_classes")
   }
+
+  const handleViewAll = () => {
+    navigate("/View_All")
+  }
+  
   const handleprofile = () => {
     navigate("/Admin_Profile", { state: { from: "/Admin_Dashboard" } });
   }
@@ -106,6 +111,7 @@ const Admin_Dashboard = () => {
                 src={View_All}  
                 alt="View All" 
                 className="w-32 h-32 object-contain"
+                onClick={handleViewAll}
               />
             </div>
             <div className="p-2 text-center">
