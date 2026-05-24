@@ -15,8 +15,10 @@ import View_Student_ID from "./Admin/Student/View_Student_ID";
 import Edit_Student from "./Admin/Student/Edit_Student";
 import Assign_students_to_classes from "./Admin/Assign_students_to_classes";
 import View_All from "./Admin/View_All";
-// Importing Teacher and Student main pages
-import Main_page_Teacher from "./Teacher/Auth/Main_page_Teacher"; 
+// Importing Teacher  main pages
+import Main_page_Teacher from "./Teacher/Main_page_Teacher"; 
+import Login_Teacher from "./Teacher/Auth/Login";
+// Importing  Student main pages
 import Main_page_student from "./Student/Auth/Main_page_student";
 
 import './App.css'
@@ -43,8 +45,10 @@ function App() {
           <Route path="/Edit_Student" element={<Edit_Student />} />
           <Route path="/Assign_students_to_classes" element={<Assign_students_to_classes />} />
           <Route path="/View_All" element={<View_All />} />
-          {/* Routes for Teacher and Student main pages */}
+          {/* Routes for Teacher main pages */}
           <Route path="/Main_page_Teacher" element={<Main_page_Teacher />} />
+          <Route path="/Login_Teacher" element={<Login_Teacher />} />
+          {/* Routes for Student main pages */}
           <Route path="/Main_page_student" element={<Main_page_student />} />
         </Routes>
       </BrowserRouter>
