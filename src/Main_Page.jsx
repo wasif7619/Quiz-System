@@ -9,7 +9,7 @@ const Main_Page = () => {
   }
   
   const handleteacher = () => {
-    navigate("/Main_page_Teacher")
+    navigate("/Login_Teacher")
   }
   
   const handlestudent = () => {

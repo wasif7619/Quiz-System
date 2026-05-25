@@ -93,7 +93,7 @@ const Admin_Profile = () => {
                 onClick={() => {
                   localStorage.removeItem('adminToken');
                   localStorage.removeItem('adminData');
-                  window.location.href = '/Admin_Login';
+                  window.location.href = '/';
                 }}
                 className="flex-1 bg-red-600 hover:bg-red-700 text-white font-semibold py-2 px-4 rounded-lg transition duration-300 transform hover:scale-105"
               >

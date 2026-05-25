@@ -18,6 +18,7 @@ import View_All from "./Admin/View_All";
 // Importing Teacher  main pages
 import Main_page_Teacher from "./Teacher/Main_page_Teacher"; 
 import Login_Teacher from "./Teacher/Auth/Login";
+import Forget_Password_Teacher from "./Teacher/Auth/Forget_Password";
 // Importing  Student main pages
 import Main_page_student from "./Student/Auth/Main_page_student";
 
@@ -48,6 +49,7 @@ function App() {
           {/* Routes for Teacher main pages */}
           <Route path="/Main_page_Teacher" element={<Main_page_Teacher />} />
           <Route path="/Login_Teacher" element={<Login_Teacher />} />
+          <Route path="/Forget_Password" element={<Forget_Password_Teacher />} />
           {/* Routes for Student main pages */}
           <Route path="/Main_page_student" element={<Main_page_student />} />
         </Routes>
