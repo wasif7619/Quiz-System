@@ -22,11 +22,14 @@ const adminauth = require('./routes/admin/auth');
 const adminTeacher = require('./routes/admin/Admin_Teacher');
 const adminStudent = require('./routes/admin/Admin_Student');
 const adminAssignStudent = require('./routes/admin/Assign_student_to_class');
+const teacherAuth = require('./routes/Teacher/auth');
 // Use routes
 app.use('/api/admin', adminauth);
 app.use('/api/teachers', adminTeacher);
 app.use('/api/students', adminStudent);
 app.use('/api/assign-student-to-class', adminAssignStudent);
+// Teacher routes
+app.use('/api/teacher', teacherAuth);
 // Start server
 app.listen(PORT, () => {
      console.log(`Server running on port ${PORT}`);

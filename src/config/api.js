@@ -32,8 +32,7 @@ export const API_ENDPOINTS = {
     teacher: {
       auth: {
         login: '/teacher/login',
-        register: '/teacher/register',
-        logout: '/teacher/logout'
+        forgotPassword: '/teacher/forgot-password'
       },
       quizzes: {
         getAll: '/teacher/quizzes',
