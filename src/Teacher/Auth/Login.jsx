@@ -7,22 +7,30 @@ const Login_Teacher = () => {
     const [password_hash, setpassword_hash] = useState('');
     const navigate = useNavigate();
     const [error, setError] = useState(null);
-    const [loading, setLoading] = useState(false);
     
-    const handleLogin = async () => {
-        try {
-          const response = await teacherAuthService.login(email, password_hash);
-          console.log('Login Response:', response);
-          if (response.success) {
-            navigate('/Main_page_Teacher');
-          } else {
-            setError('Login failed: ' + response.message);
-          } 
-        } catch (error) {
-          console.error('Login Error:', error);
-          setError('An error occurred during login.');
-        }
-      };
+    const handleLogin = async (e) => {
+      e.preventDefault();
+      
+      if (!email || !password_hash) {
+        setError('Please fill in all fields');
+        return;
+      }
+    
+      setError('');
+    
+      const result = await teacherAuthService.login(email, password_hash);
+    
+      if (result.success) {
+        localStorage.setItem('teacherToken', result.token);
+        localStorage.setItem('teacherData', JSON.stringify(result.teacher));
+        
+       navigate('/Main_page_Teacher');
+      } else {
+        setError(result.message || 'Login failed. Please try again.');
+      }
+    
+    };
+    
 
   return (
     <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-blue-50 to-purple-50">

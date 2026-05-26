@@ -1,18 +1,18 @@
-import class_teacher from '../assets/class_teacher.jpg'
-import time_table from '../assets/time_table.jpg'
-import quiz from '../assets/quiz.png'
-import result from '../assets/result.jpg'
+import class_teacher from "../../assets/class_teacher.jpg";
+import time_table from '../../assets/time_table.jpg'
+import quiz from '../../assets/quiz.png'
+import result from '../../assets/result.jpg'
 import { useNavigate } from 'react-router-dom'
 
 const Teacher_DashBoard = () => {
-    const token = localStorage.getItem('teacherToken');
-    const teacherData = JSON.parse(localStorage.getItem('teacherInfo'));
-    console.log('Teacher Token:', token);
-    console.log('Teacher Data:', teacherData);
+    const teacherData = JSON.parse(localStorage.getItem('teacherData'));
+    const token=localStorage.getItem('teacherToken');
+    console.log("Teacher Token from Local Storage:", token);
+    console.log("Teacher Data from Login:", teacherData);
     const navigate = useNavigate();
 
-  const handleteacher = () => {
-    navigate("/Teacher_Dashboard")
+  const handleclass_teacher = () => {
+    navigate("/Teacher_Class_Dashboard")
   }
 
   const handlestudent = () => {
@@ -28,7 +28,7 @@ const Teacher_DashBoard = () => {
   }
   
   const handleprofile = () => {
-    navigate("/Admin_Profile", { state: { from: "/Admin_Dashboard" } });
+    navigate("/Teacher_Profile", { state: { from: "/Teacher_Dashboard" } });
   }
   return (
     <div className="min-h-screen bg-gradient-to-br from-blue-50 to-purple-50 p-6">
@@ -43,9 +43,9 @@ const Teacher_DashBoard = () => {
          </div>
     
     {/* Heading centered */}
-    <h1 className="text-3xl font-bold text-gray-800">Admin Dashboard</h1>
+    <h1 className="text-3xl font-bold text-gray-800">Teacher Dashboard</h1>
   </div>
-  <p className="text-gray-500 text-sm text-center mt-2">Manage your quiz system efficiently</p>
+  <p className="text-gray-500 text-sm text-center mt-2">Manage your all activities efficiently</p>
 </div>
 
       {/* Grid Layout - 2 images per row */}
@@ -59,7 +59,7 @@ const Teacher_DashBoard = () => {
                 src={class_teacher}  
                 alt="Teacher" 
                 className="w-32 h-32 object-contain"
-                onClick={handleteacher}
+                onClick={handleclass_teacher}
               />
             </div>
             <div className="p-2 text-center">

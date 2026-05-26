@@ -16,9 +16,11 @@ import Edit_Student from "./Admin/Student/Edit_Student";
 import Assign_students_to_classes from "./Admin/Assign_students_to_classes";
 import View_All from "./Admin/View_All";
 // Importing Teacher  main pages
-import Main_page_Teacher from "./Teacher/Main_page_Teacher"; 
+import Main_page_Teacher from "./Teacher/DashBoard/Main_page_Teacher"; 
 import Login_Teacher from "./Teacher/Auth/Login";
 import Forget_Password_Teacher from "./Teacher/Auth/Forget_Password";
+import Teacher_Profile from "./Teacher/Profile/Teacher_profile";
+import Teacher_Class_Dashboard from "./Teacher/Teacher_Class/Teacher_Class_Dashboard";
 // Importing  Student main pages
 import Main_page_student from "./Student/Auth/Main_page_student";
 
@@ -50,6 +52,8 @@ function App() {
           <Route path="/Main_page_Teacher" element={<Main_page_Teacher />} />
           <Route path="/Login_Teacher" element={<Login_Teacher />} />
           <Route path="/Forget_Password" element={<Forget_Password_Teacher />} />
+          <Route path="/Teacher_Profile" element={<Teacher_Profile />} />
+          <Route path="/Teacher_Class_Dashboard" element={<Teacher_Class_Dashboard />} />
           {/* Routes for Student main pages */}
           <Route path="/Main_page_student" element={<Main_page_student />} />
         </Routes>
