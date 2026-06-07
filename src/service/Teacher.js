@@ -57,5 +57,28 @@ export const teacherAuthService = {
         message: error.message
       };
     }
-  }
+  },
+                        //classes Dashboard
+  Classes_Dashboard: async () => {
+    try {
+      const url = getFullUrl(API_ENDPOINTS.main.teacher.teacher_classes.getAll);
+      const token = teacherAuthService.getToken();
+      const response = await fetch(url, {
+        method: 'GET',
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': `Bearer ${token}`
+        }
+      }); 
+      const data = await response.json();
+      return data;
+    } catch (error) {
+      console.error('Error fetching classes dashboard:', error);
+      return {
+        success: false,
+        message: error.message
+      };
+    }
+  } 
+
 };
