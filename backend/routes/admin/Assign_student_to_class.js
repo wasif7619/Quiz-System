@@ -54,7 +54,7 @@ const upload = multer({
 });
 
 router.post("/assign_student_to_class", async (req, res) => {
-  const { student_full_name, teacher_full_name, class_name } = req.body;
+  const { student_full_name, teacher_full_name, class_name,class_date } = req.body;
 
   try {
     // 1. Find student
@@ -93,10 +93,10 @@ router.post("/assign_student_to_class", async (req, res) => {
 
     // 4. Create assignment in teacher_student_assignments table
     await pool.query(
-      `INSERT INTO teacher_student_assignments (teacher_id, student_id) 
-       VALUES ($1, $2) 
+      `INSERT INTO teacher_student_assignments (teacher_id, student_id,class_date) 
+       VALUES ($1, $2, $3) 
        ON CONFLICT (teacher_id, student_id) DO NOTHING`,
-      [teacher_id, student_id]
+      [teacher_id, student_id, class_date]
     );
 
     res.status(200).json({
@@ -107,7 +107,8 @@ router.post("/assign_student_to_class", async (req, res) => {
         student_name: student_full_name,
         teacher_id: teacher_id,
         teacher_name: teacher_full_name,
-        class_name: class_name
+        class_name: class_name,
+        class_date: class_date
       }
     });
 
